@@ -12,6 +12,7 @@ async def on_ready():
 	#await client.get_channel(channel_id).send("bot is online")
 	#channel = discord.Object(channel_id)
 
+
 @client.event
 async def on_message(message):
 	c_channel = discord.utils.get(message.guild.text_channels, name='general')
@@ -20,20 +21,21 @@ async def on_message(message):
 	msg = messages[0].content
 	msg_user = message.author.name
 
-	with open('dashboard/data/msg.txt','w') as f:
+	with open('dashboard/app/api/msg.txt','w') as f:
 		f.write( ' '+ msg_user + ':: ' + msg)
 
-	with open('dashboard/data/test.txt','r') as file:
+	with open('dashboard/app/api/test.txt','r') as file:
 		lines = file.readlines()
-		idx = random.randint(1,len(lines))
 
-		bot_msg = lines[idx]
+		while(True):
+			idx = random.randint(1,len(lines))
 
-		if bot_msg.strip():
-			await asyncio.sleep(4)
-			await message.channel.send(bot_msg)
-		else:
-			return
+			bot_msg = lines[idx]
+
+			if bot_msg.strip():
+				await asyncio.sleep(4)
+				await message.channel.send(bot_msg)
+
 
 
 
