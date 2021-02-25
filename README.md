@@ -3,7 +3,7 @@
 ## About Project
 The user can use this tool to analyse and monitor the channel's chat real time,like the sentiment of the chats and filter out a specific message based on it's sentiment value or toxicity
 
-##Before runnig the project
+## Before runnig the project
 1. Go to file `discord_bot.py` and copy your Bot Token from discord developer page.
 
 2. Go to file `dashboard\app\api\expertai_api.py` and enter your password and username for the ExpertAi NLAPI.
