@@ -18,3 +18,6 @@ The project is built using Django Web Framework.
 4. got to dashboard folder and start server using `python manage.py runserver`
 4. open a second terminal and start run `discord_bot.py` for our Discord Bot
 
+## Create a Discord Bot Account
+Go to this page to create a bot account on discord
+https://discordpy.readthedocs.io/en/latest/discord.html
