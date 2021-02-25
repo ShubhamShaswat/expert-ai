@@ -10,6 +10,12 @@ The project is built using Django Web Framework.
 
 2. Go to file `dashboard\app\api\expertai_api.py` and enter your password and username for the ExpertAi NLAPI.
 
+
+### Create a Discord Bot Account
+Go to this page to create a bot account on discord
+https://discordpy.readthedocs.io/en/latest/discord.html
+
+
 ## How to run the project 
 
 1. clone the repo to your local machine
@@ -18,6 +24,4 @@ The project is built using Django Web Framework.
 4. got to dashboard folder and start server using `python manage.py runserver`
 4. open a second terminal and start run `discord_bot.py` for our Discord Bot
 
-## Create a Discord Bot Account
-Go to this page to create a bot account on discord
-https://discordpy.readthedocs.io/en/latest/discord.html
+
