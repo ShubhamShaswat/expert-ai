@@ -20,10 +20,10 @@ async def on_message(message):
 	msg = messages[0].content
 	msg_user = message.author.name
 
-	with open('dashboard/app/api/msg.txt','w') as f:
+	with open('dashboard/data/msg.txt','w') as f:
 		f.write( ' '+ msg_user + ':: ' + msg)
 
-	with open('dashboard/app/api/test.txt','r') as file:
+	with open('dashboard/data/test.txt','r') as file:
 		lines = file.readlines()
 		idx = random.randint(1,len(lines))
 
@@ -35,20 +35,6 @@ async def on_message(message):
 		else:
 			return
 
-
-@client.event
-async def send_msg(message):
-
-	'''
-	with open('dashboard/app/api/test.txt','r') as file:
-		lines = file.readlines()
-	idx = random.randint(0,len(lines))
-
-	print(lines[idx])
-	'''
-	print("in")
-	#await message.channel.send("bot is online")
-	#await asyncio.sleep(4) # task runs every 4 seconds
 
 
 client.run('') ##YOUR TOKEN HERE

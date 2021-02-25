@@ -20,7 +20,7 @@ import random
 
 
 #open Files
-filepath = os.path.join(os.getcwd(),'app/api/msg.txt')
+filepath = os.path.join(os.getcwd(),'data/msg.txt')
 #f =  open(filepath,'r')
 #lines = f.readlines()
 count = 0
@@ -83,7 +83,7 @@ def index(request):
 
 
 
-    context = {'name':['BTC', 'ETH', 'ADA', 'XLM', 'ATOM', 'XRP'],'sentiment' : 23 } #store that in other files
+    context = {'name':[],'sentiment' : 23 } #store that in other files
     context['segment'] = 'index'
 
     html_template = loader.get_template( 'index.html' )
