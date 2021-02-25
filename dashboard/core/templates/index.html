@@ -1,0 +1,238 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  {% csrf_token %}
+    <div class="row">
+
+      <div class="col-12">
+        <div class="card card-chart">
+          <div class="card-header ">
+
+            <div class="row">
+              <div class="col-sm-12 text-left">
+                <h2 class="card-title">Discord Chat Analysis</h2>
+                <div class="">
+                  <form action="" method="post" id="target">
+                    {% csrf_token %}
+                  <!--  <input type="text"  name="myText" > -->
+                    <input type= "submit" value="Start">
+                  </form>
+                </div>
+              </div>
+
+            <div class="row">
+              <div class="col-sm-12 text-left">
+                <h5 class="card-category"></h5>
+                <h4 class="card-title">Real Time Sentiment</h4>
+              </div>
+
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-area">
+              <canvas id="chartBig1"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+
+
+
+      <div class="col-lg-4">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h4 class="card-title">Average Sentiment</h4>
+            <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> <span id='avgSentiment'></h3>
+            <h4 class="card-title">Current Chars Length</h4>
+            <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> <span id='textLength'></h3>
+            <h4 class="card-title">Chats Analysed</h4>
+            <h3 class="card-title"><i class="tim-icons icon-send text-success"></i> <span id='chatsNum'></h3>
+            <h4 class="card-title">Last Msg Username</h4>
+            <h4 class="card-title"><i class="tim-icons icon-send text-success"></i> <span id='msg_user'></h4>
+          </div>
+
+        </div>
+      </div>
+      <!-- -->
+
+
+      <div class="col-lg-4">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h4 class="card-title">Average Sentiment</h4>
+            <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> <div id='avgSentiment'></div></h3>
+          </div>
+
+          <div class="card-body">
+            <div class="chart-area">
+              <canvas id="chartLinePurple"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Future Use</h5>
+            <h4 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> <div id='textLength'></div></h4>
+          </div>
+          <div class="card-body">
+            <div class="chart-area">
+              <canvas id="CountryChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Future Use</h5>
+            <h3 class="card-title"><i class="tim-icons icon-send text-success"></i><span id='all_tokens'></h3>
+          </div>
+          <div class="card-body">
+            <div class="chart-area">
+              <canvas id="chartLineGreen"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 ">
+      <div class="card card-tasks">
+        <div class="card-header ">
+          <h6 class="title d-inline">Sentiment Filter</h6>
+          <p class="card-category d-inline">Put Sentiment Value:</p>
+          <input type='number' id='id1' value="0"/>
+          <button onclick="gfg_Run()"> click to set </button>
+
+          <div class="dropdown">
+            <button type="button" class="btn btn-link dropdown-toggle btn-icon" data-toggle="dropdown">
+              <i class="tim-icons icon-settings-gear-63"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="#pablo">Delete</a>
+              <a class="dropdown-item" href="#pablo">Another action</a>
+              <a class="dropdown-item" href="#pablo">Something else</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body ">
+          <div class="table-full-width table-responsive">
+            <table class="table">
+              <tbody>
+                {% include "includes/analysedText.html" %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<!-- Name of the Cryptocurrencies -->
+{{ name|json_script:"mydata" }}
+
+<!-- Sentiment data -->
+{{ sentiment|json_script:"sentimentjs" }}
+
+
+
+  <script>
+
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+      setInterval(fetchdata,1000);
+
+
+    });
+
+
+    //discordjs
+
+    var inputF = document.getElementById("id1").value;
+    function gfg_Run() {
+          inputF.setAttribute('value', 'defaultValue');
+
+        }
+
+
+
+    var mySentiment = 0;
+    var avgSentiment = 0;
+    //ajax post call
+    function fetchdata(){
+
+       $.ajax({
+        url: '',
+        type: 'post',
+        dataType: 'json',
+        success: function(response){
+         // Perform operation on the return value
+         //$('#message').append(); //response[0].text
+         mySentiment = response[0].sentiment;
+         avgSentiment = response[0].average_sentiment;
+         $('#avgSentiment').text(response[0].average_sentiment);
+         $('#textLength').text(response[0].length);
+         $('#msg_user').text(response[0].msg_user);
+         $('#all_tokens').text(response[0].all_tokens);
+         $('#chatsNum').text(response[0].chatsNum);
+         if (mySentiment > inputF) {
+           $('#message').append(response[0].text); //response[0].text
+           }
+
+         //$('#sentiment').append(response[0].sentiment);
+
+         setTimeout(function(){
+           $('#remove').remove();
+         }, 1000); // update the DIV after 10 sec
+        }
+
+       });
+      }
+
+    $('#target').submit(function() { // catch the form's submit event
+
+
+      $.ajax({ // create an AJAX call...
+          data: $(this).serialize(), // get the form data
+          type: $(this).attr('method'), // GET or POST
+          url: $(this).attr('action'), // the file to call
+          dataType: 'json',
+          success: function(response) { // on success..
+              $('#message').append(response[0].text);
+              mySentiment = response[0].sentiment;
+              alert(mySentiment);
+              setTimeout(function(){
+                $('#remove').remove();
+              }, 10000); // update the DIV after 10 sec
+          }
+
+
+      });
+    return false; // cancel original event to prevent form submitting
+  });
+
+  </script>
+
+
+
+{% endblock javascripts %}
