@@ -16,7 +16,7 @@
 
             <div class="row">
               <div class="col-sm-12 text-left">
-                <h2 class="card-title">Discord Chat Analysis</h2>
+                <h2 class="card-title">Discord Chat Moderarion</h2>
                 <div class="">
                   <form action="" method="post" id="target">
                     {% csrf_token %}
@@ -47,7 +47,7 @@
 
 
 
-      <div class="col-lg-4">
+      <div class="col-lg-4 col-sm-12">
         <div class="card card-chart">
           <div class="card-header">
             <h4 class="card-title">Average Sentiment</h4>
@@ -65,11 +65,39 @@
       <!-- -->
 
 
+      <div class="col-lg-8 col-md-8 col-sm-12 ">
+        <div class="card card-tasks">
+          <div class="card-header ">
+            <h6 class="title d-inline">Sentiment Filter</h6>
+            <p class="card-category d-inline">Put Sentiment Value:</p>
+            <input type='number' id='id1' value="0"/>
+            <button id="btn2" onclick='gfg_Run()'> click to set </button>
+
+            <div class="dropdown">
+              <button type="button" class="btn btn-link dropdown-toggle btn-icon" data-toggle="dropdown">
+                <i class="tim-icons icon-settings-gear-63"></i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#pablo">Delete</a>
+                <a class="dropdown-item" href="#pablo">Another action</a>
+                <a class="dropdown-item" href="#pablo">Something else</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body ">
+            <div class="table-full-width table-responsive">
+                  {% include "includes/analysedText.html" %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <div class="col-lg-4">
         <div class="card card-chart">
           <div class="card-header">
-            <h4 class="card-title">Average Sentiment</h4>
-            <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> <div id='avgSentiment'></div></h3>
+            <h4 class="card-title">Future Use</h4>
+            <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i></h3>
           </div>
 
           <div class="card-body">
@@ -110,38 +138,7 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-lg-12 col-md-12 ">
-      <div class="card card-tasks">
-        <div class="card-header ">
-          <h6 class="title d-inline">Sentiment Filter</h6>
-          <p class="card-category d-inline">Put Sentiment Value:</p>
-          <input type='number' id='id1' value="0"/>
-          <button onclick="gfg_Run()"> click to set </button>
 
-          <div class="dropdown">
-            <button type="button" class="btn btn-link dropdown-toggle btn-icon" data-toggle="dropdown">
-              <i class="tim-icons icon-settings-gear-63"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="#pablo">Delete</a>
-              <a class="dropdown-item" href="#pablo">Another action</a>
-              <a class="dropdown-item" href="#pablo">Something else</a>
-            </div>
-          </div>
-        </div>
-        <div class="card-body ">
-          <div class="table-full-width table-responsive">
-            <table class="table">
-              <tbody>
-                {% include "includes/analysedText.html" %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
@@ -167,14 +164,13 @@
 
 
     //discordjs
-
-    var inputF = document.getElementById("id1").value;
-    function gfg_Run() {
-          inputF.setAttribute('value', 'defaultValue');
-
-        }
+    var inputF = 0;
 
 
+    $('#btn2').click(function() {
+        inputF = document.getElementById("id1").value;
+
+      });
 
     var mySentiment = 0;
     var avgSentiment = 0;
@@ -196,8 +192,8 @@
          $('#all_tokens').text(response[0].all_tokens);
          $('#chatsNum').text(response[0].chatsNum);
          if (mySentiment > inputF) {
-           $('#message').append(response[0].text); //response[0].text
-           }
+           $('#message').text(response[0].text); //response[0].text
+          }
 
          //$('#sentiment').append(response[0].sentiment);
 
